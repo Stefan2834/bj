@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Test</title>
+  <link href="test.css" rel="stylesheet">
+  <script src="test.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&family=Secular+One&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="container">
+    <div id="test1">You have : <span id="playerCard"></span></div>
+    <div id="test2">Total : <span id="playerTotal"></span></div>
+    <div id="test3">Dealer has : <span id="dealerCard"></span></div>
+    <div id="test4">Total : <span id="dealerTotal"></span></div>
+    <div id="test5"><span id='statusBox'></span></div>
+    <div id="flex">
+      <button id="hit" class="btn" onclick="hit()">Hit</button>
+      <button id="stand" class=btn onclick="stand()">Stand</button>
+      <button id="double" class="btn" onclick="double()">Double</button>
+    </div>
+    <button id="newGame" class="btn" onclick="newGame()">NewGame</button>
+    <button id="insuranceNo" class="btn insurance" onclick="ins()">PayInsurance</button>
+    <button id="insuranceYes" class="btn insurance " onclick="ins()">Don'tPayInsurance</button>
+  </div>
+</body>
+</html>
