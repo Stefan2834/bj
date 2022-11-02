@@ -15,6 +15,7 @@ var aceDealer;
 var sum;
 var dealerSum;
 var game;
+var totalCard;
 var x = 0;
 btnBlock();
 insuranceYes.disabled = true;
@@ -25,15 +26,12 @@ class BlackJack {
         this.player2 = playerSecond;
         this.dealer1 = dealerFirst;
         this.dealer2 = dealerSecond;
-        this.totalCard = 53;
         this.sum = sum;
     }
     generator() {
-        this.totalCard -= 1;
-        this.player = Math.floor(Math.random() * this.totalCard);
-        console.log(this.player);
+        this.player = Math.floor(Math.random() * totalCard);
+        totalCard -= 1;
         this.delete = game.splice(this.player, 1);
-        console.log(this.delete[0]);
         return this.delete[0];
     }
     player() {
@@ -111,6 +109,7 @@ function newGame () {
     btnUnblock();
     insuranceNo.disabled = true;
     insuranceYes.disabled = true;
+    totalCard = 52;
     game = [
         ['As&spades;', 11], ['As&hearts;', 11],
         ['2&spades;', 2], ['2&hearts;', 2],
