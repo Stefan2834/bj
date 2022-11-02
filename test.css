@@ -7,6 +7,18 @@
 body {
     overflow: hidden;
 }
+#table {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background-image: url(table.jpg);
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    background-blend-mode: darken;
+}
 #container {
     width:300px;
     height:400px;
