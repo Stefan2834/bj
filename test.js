@@ -181,6 +181,7 @@ function newGame () {
 function hit() {
     let newBlackJack = new BlackJack();
     let hit = newBlackJack.generator();
+    doubleBtn.disabled = true;
     if(hit[0].includes('As')) {
         acePlayer += 1;
     }
