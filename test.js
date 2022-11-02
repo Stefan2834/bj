@@ -31,7 +31,9 @@ class BlackJack {
     generator() {
         this.totalCard -= 1;
         this.player = Math.floor(Math.random() * this.totalCard);
+        console.log(this.player);
         this.delete = game.splice(this.player, 1);
+        console.log(this.delete[0]);
         return this.delete[0];
     }
     player() {
@@ -54,14 +56,10 @@ class BlackJack {
         insuranceNo.disabled = false;
         insuranceYes.disabled = false;
     }
-    status(sum) {
-        sum;
+    status() {
         if(sum > 21) {
             btnBlock();
             return 'Bust!';
-        } else if (sum === 21) {
-            btnBlock();
-            stand();
         } else {
             return '';
         }
@@ -96,11 +94,11 @@ class BlackJack {
         return sum;
     }
     aceDealer() {
-        if(aceDealer === 0){
+        if(aceDealer > 0){
             while(dealerSum > 21) {
                 dealerSum -= 10;
-                acePlayer -= 1;
-                if(acePlayer === 0) {
+                aceDealer -= 1;
+                if(aceDealer === 0) {
                     break;
                 }
             }
@@ -170,7 +168,7 @@ function newGame () {
         } else if(dealer1[1] !== 11 && dealer2 !== 11) {
             statusBox.innerHTML = 'You have BlackJack'
         } 
-    } else if(dealer1[0] === 10 && dealer2[0] === 11) {
+    } else if(dealer1[1] === 10 && dealer2[1] === 11) {
         let newBlackjack = new BlackJack(player1,player2,dealer1, dealer2);
         dealerCard.innerHTML = newBlackjack.dealer();
         dealerSum += dealer2[1];
@@ -184,25 +182,19 @@ function newGame () {
 function hit() {
     let newBlackJack = new BlackJack();
     let hit = newBlackJack.generator();
-    if(hit.includes('As')) {
+    if(hit[0].includes('As')) {
         acePlayer += 1;
     }
     playerCard.innerHTML += ' and ' + hit[0];
     sum += hit[1];
+    newBlackJack.acePlayer();
     playerTotal.innerHTML = sum;
-    if(acePlayer !== 0 ) {
-        if(sum > 21) {
-            while(acePlayer > 0) {
-                acePlayer -= 1;
-                sum -= 10;
-                playerTotal.innerHTML = sum;
-            }
-            if(acePlayer === 0) {
-                return;
-            }
-        }
+    if(sum !== 21) {
+        statusBox.innerHTML = newBlackJack.status(sum);
+    } else {
+        btnBlock();
+        stand();
     }
-    statusBox.innerHTML = newBlackJack.status(sum);
 }
 function stand() {
     let newBlackjack = new BlackJack(player1,player2, dealer1, dealer2);
@@ -215,21 +207,13 @@ function stand() {
     dealerTotal.innerHTML = dealerSum;
     while(dealerSum < 17) {
         let newBlackjack = new BlackJack(player1,player2, dealer1, dealer2);
-        let gen = newBlackjack.generator();
+        var gen = newBlackjack.generator();
         if(gen[0].includes("As")) {
             aceDealer += 1;
         }
         dealerSum += gen[1];
         dealerCard.innerHTML += ' and ' + gen[0];
-        while(dealerSum > 21) {
-            while(aceDealer > 0) {
-                console.log(aceDealer);
-                dealerSum -= 10;
-                aceDealer -= 1;
-                dealerTotal.innerHTML = sum;
-                dealerTotal.innerHTML = dealerSum;
-            }
-        }
+        newBlackjack.aceDealer();
     }
     dealerTotal.innerHTML = dealerSum;
     statusBox.innerHTML = newBlackjack.dealerStatus(sum,dealerSum);
