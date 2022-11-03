@@ -13,6 +13,7 @@ var pariu = document.getElementById("pariu");
 var number = document.querySelectorAll(".number");
 var pariaza = document.getElementById("pariaza");
 var repeat = document.getElementById("repeat");
+var newBtn = document.getElementById("newGame");
 var player1;
 var player2;
 var acePlayer;
@@ -198,6 +199,7 @@ function newGame () {
         statusBox.innerHTML = 'Dealer has BlackJack';
         lose();
     }
+    newBtn.disabled = true;
 }
 
 
@@ -274,6 +276,7 @@ function ins (a) {
             draw();
         }
         pariaza.style.display = 'inherit';
+        newBtn.disabled = false;
         let newBlackJack = new BlackJack(player1,player2,dealer1,dealer2)
         dealerCard.innerHTML = newBlackJack.dealer();
         dealerSum += dealer2[1];
@@ -345,12 +348,14 @@ function win() {
     bet = 0;
     Money();
     pariaza.style.display = 'inherit';
+    newBtn.disabled = false;
 }
 
 function lose() {
     bet = 0;
     Money();
     pariaza.style.display = 'inherit';
+    newBtn.disabled = false;
 }
 
 
@@ -359,6 +364,7 @@ function draw() {
     bet = 0;
     Money();
     pariaza.style.display = 'inherit';
+    newBtn.disabled = false;
 }
 
 function blackJack() {
@@ -366,6 +372,7 @@ function blackJack() {
     bet = 0;
     Money();
     pariaza.style.display = 'inherit';
+    newBtn.disabled = false;
 }
 
 repeat.addEventListener("click", function () {
