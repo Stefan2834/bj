@@ -8,6 +8,11 @@ var standBtn = document.getElementById("stand");
 var doubleBtn = document.getElementById("double");
 var insuranceNo = document.getElementById("insuranceNo");
 var insuranceYes = document.getElementById("insuranceYes");
+var balance = document.getElementById("balance");
+var pariu = document.getElementById("pariu");
+var number = document.querySelectorAll(".number");
+var pariaza = document.getElementById("pariaza");
+var repeat = document.getElementById("repeat");
 var player1;
 var player2;
 var acePlayer;
@@ -17,6 +22,10 @@ var dealerSum;
 var game;
 var totalCard;
 var x = 0;
+var money = 2000;
+var bet = 0;
+var reBet = 0;
+Money ();
 btnBlock();
 insuranceYes.disabled = true;
 insuranceNo.disabled = true;
@@ -57,6 +66,7 @@ class BlackJack {
     status() {
         if(sum > 21) {
             btnBlock();
+            lose();
             return 'Bust!';
         } else {
             return '';
@@ -65,12 +75,16 @@ class BlackJack {
     dealerStatus(sum,dealerSum) {
         btnBlock();
         if(dealerSum > 21) {
+            win();
             return 'Dealer Bust';
         } else if(dealerSum === sum) {
+            draw();
             return 'Draw';
         } else if(dealerSum < sum) {
+            win();
             return 'You win';
         } else if(dealerSum > sum) {
+            lose();
             return 'You lose';
         }
     }
@@ -106,10 +120,16 @@ class BlackJack {
 }
 
 function newGame () {
+    if (bet <= 0) {
+        alert('Suma gresit pariata');
+        return;
+    }
     btnUnblock();
     insuranceNo.disabled = true;
     insuranceYes.disabled = true;
     totalCard = 52;
+    reBet = bet;
+    pariaza.style.display = 'none'
     game = [
         ['As&spades;', 11], ['As&hearts;', 11],
         ['2&spades;', 2], ['2&hearts;', 2],
@@ -164,7 +184,9 @@ function newGame () {
         dealerTotal.innerHTML = dealerSum;
         if(dealerSum === sum) {
             statusBox.innerHTML = 'Draw';
+            draw();
         } else if(dealer1[1] !== 11 && dealer2 !== 11) {
+            blackJack();
             statusBox.innerHTML = 'You have BlackJack'
         } 
     } else if(dealer1[1] === 10 && dealer2[1] === 11) {
@@ -174,6 +196,7 @@ function newGame () {
         dealerTotal.innerHTML = dealerSum;
         btnBlock();
         statusBox.innerHTML = 'Dealer has BlackJack';
+        lose();
     }
 }
 
@@ -228,13 +251,29 @@ function btnUnblock () {
     standBtn.disabled = false;
     doubleBtn.disabled = false; 
 }
-function ins () {
+function insYes () {
+    if(bet > money) {
+        alert('Nu ai suficienta balanta');
+    } else {
+        ins(true);
+    }
+}
+function ins (a) {
     if(dealer2[1] === 10) {
         if(sum !== 21) {
             statusBox.innerHTML = 'Dealer has BlackJack';
+            if(a) {
+                money += bet;
+                bet = 0;
+            } else {
+                bet = 0;
+            }
+            Money();
         } else if(sum === 21) {
             statusBox.innerHTML = 'Draw';
+            draw();
         }
+        pariaza.style.display = 'inherit';
         let newBlackJack = new BlackJack(player1,player2,dealer1,dealer2)
         dealerCard.innerHTML = newBlackJack.dealer();
         dealerSum += dealer2[1];
@@ -245,8 +284,13 @@ function ins () {
         statusBox.innerHTML = 'You have BlackJack';
         let newBlackJack = new BlackJack(player1,player2,dealer1,dealer2);
         dealerCard.innerHTML = newBlackJack.dealer();
+        blackJack();
     } else{
-        statusBox.innerHTML = 'Dealer don\' Have BlackJack';
+        statusBox.innerHTML = 'Dealer don\'t Have BlackJack';
+        if(a) {
+            money -= bet;
+            Money();
+        }
         btnUnblock();
     }
     insuranceNo.disabled = true;
@@ -265,9 +309,71 @@ function counter () {
     }
 }
 function double () {
+    if(bet <= money) {
+        money -= bet;
+    } else {
+        alert('Nu ai destula balanta');
+        return;
+    }
     btnBlock();
     hit();
     if(sum < 22) {
         stand();
     } 
 }
+
+function Money () {
+    pariu.innerHTML = bet;
+    balance.innerHTML = money;
+}
+
+
+number.forEach(number => {
+    number.addEventListener("click", function () {
+        var change = Number(number.getAttribute("data-id"));
+        if(change <= money) {
+            bet += change;
+            money -= change;
+        }
+        Money();
+    })
+})
+
+
+function win() {
+    money += bet*2;
+    bet = 0;
+    Money();
+    pariaza.style.display = 'inherit';
+}
+
+function lose() {
+    bet = 0;
+    Money();
+    pariaza.style.display = 'inherit';
+}
+
+
+function draw() {
+    money += bet;
+    bet = 0;
+    Money();
+    pariaza.style.display = 'inherit';
+}
+
+function blackJack() {
+    money =+ bet*2.5;
+    bet = 0;
+    Money();
+    pariaza.style.display = 'inherit';
+}
+
+repeat.addEventListener("click", function () {
+    if(money >= reBet) {
+        money -= reBet - bet;
+        bet = reBet;
+        Money();
+    } else {
+        alert('Nu ai destula balanta');
+    }
+})

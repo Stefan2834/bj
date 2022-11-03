@@ -7,15 +7,31 @@
   <title>Test</title>
   <link href="test.css" rel="stylesheet">
   <script src="test.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&family=Secular+One&display=swap" rel="stylesheet">
 </head>
 <body>
   <div id="table">
+    <div id="money">
+      <div class="bani">Balanta:<span id='balance'></span></div>
+      <div class="bani">Pariu:<span id='pariu'></span></div>
+    </div>
+    <div id="pariaza">
+      <span class="text">---Selectati suma---<button id='repeat'><i class="fa-solid fa-repeat"></i></button></span>
+      <div id="flex-number">
+        <button data-id='-10' class="number">- 10</button>
+        <button data-id='+10' class="number">+ 10</button>
+        <button data-id='-50' class="number">- 50</button>
+        <button data-id='+50' class="number">+ 50</button>
+        <button data-id='-100' class="number">- 100</button>
+        <button data-id='+100' class="number">+ 100</button>
+      </div>
+    </div>
     <div id="container">
       <div id="test1">You have : <span id="playerCard"></span></div>
       <div id="test2">Total : <span id="playerTotal"></span></div>
       <div id="test3">Dealer has : <span id="dealerCard"></span></div>
-      <div id="test4">Total : <span id="dealerTotal"></span></div>
+      <div id="test4">Total Dealer : <span id="dealerTotal"></span></div>
       <div id="test5"><span id='statusBox'></span></div>
       <div id="flex">
         <button id="hit" class="btn" onclick="hit()">Hit</button>
@@ -23,8 +39,8 @@
         <button id="double" class="btn" onclick="double()">Double</button>
       </div>
       <button id="newGame" class="btn" onclick="newGame()">NewGame</button>
-      <button id="insuranceNo" class="btn insurance" onclick="ins()">PayInsurance</button>
-      <button id="insuranceYes" class="btn insurance " onclick="ins()">Don'tPayInsurance</button>
+      <button id="insuranceNo" class="btn insurance" onclick="insYes()">PayInsurance</button>
+      <button id="insuranceYes" class="btn insurance " onclick="ins(false)">Don'tPayInsurance</button>
     </div>
   </div>
 </body>
